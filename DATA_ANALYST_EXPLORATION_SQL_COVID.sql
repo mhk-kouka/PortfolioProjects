@@ -1,13 +1,9 @@
 use PortfolioProject;
 
-select * 
-from CovidDeath
-order by 3,4;
 
 
---select * 
---from CovidVaccination
---order by 3,4;
+
+
 
 --- Select the data that we are going to be using
 
@@ -24,6 +20,8 @@ where location like '%algeria%'
 and continent is not null
 order by 1,2
 
+
+
 -- Looking at the Total Cases vs Population
 --- Shows what percentage of population got covid
 select location, date,population, total_cases, (CAST(total_cases as real)/CAST(population as real)) * 100 as "PercentPopulationInfected"
@@ -31,6 +29,8 @@ from CovidDeath
 --where location like '%algeria%'
 where continent is not null
 order by 1,2
+
+
 
 -- Looking at Countries with Highest Infection Rate compared to population
 select location, population,  MAX(total_cases) as "HighestInfection", MAX((CAST(total_cases as real)/CAST(population as real)) * 100) as "PercentPopulationInfected"
@@ -60,6 +60,8 @@ from CovidDeath
 where continent is null
 Group by location
 order by "TotalDeathCount" desc
+
+
 
 
 -- Global  Numbers
@@ -94,6 +96,8 @@ on vac.location = dea.location and vac.date=dea.date
 where  dea.continent is not null
 order by 2,3
 
+
+
 -- Use CTE
 with PopvsVac (Continent, Location,Date, Population, NewVaccinations,RollingPeopleVaccinated)
 as
@@ -111,6 +115,8 @@ where  dea.continent is not null
  select *,  (RollingPeopleVaccinated / Population) *100
  from  PopvsVac
  order by 2,3
+
+
 
 -- Temp Table 
 Drop Table if exists #PercentpopulationVaccinated
@@ -137,6 +143,9 @@ where  dea.continent is not null
  select *,  (RollingPeopleVacinated / Population) *100
  from  #PercentpopulationVaccinated
  order by 2,3
+
+
+
 
 
  -- Creating View to store for later visualization 
